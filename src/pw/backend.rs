@@ -186,16 +186,21 @@ impl Inner {
 			.map(|(id, _)| *id)
 	}
 
+	/// The device and hardware route a node sits on, once that route is known.
+	fn route_of(&self, n: &NodeRef) -> Option<(&DeviceRef, i32, RouteInfo)> {
+		let dev = self.devices.get(&n.device_id?)?;
+		let route_device = n.route_device?;
+		let route = dev.routes.get(&route_device)?;
+		Some((dev, route_device, *route))
+	}
+
 	/// Apply a volume/mute change to a node (sink or source), using the hardware
 	/// route when it has one (USB headsets/mics etc.), else the node's Props.
 	fn apply_node(&self, node_id: u32, linear: Option<f32>, mute: Option<bool>) {
 		let Some(n) = self.nodes.get(&node_id) else {
 			return;
 		};
-		if let (Some(dev_id), Some(route_device)) = (n.device_id, n.route_device)
-			&& let Some(dev) = self.devices.get(&dev_id)
-			&& let Some(route) = dev.routes.get(&route_device)
-		{
+		if let Some((dev, route_device, route)) = self.route_of(n) {
 			set_device_route(
 				&dev.proxy,
 				route.index,
@@ -908,7 +913,12 @@ fn update_node_from_props(inner: &Rc<RefCell<Inner>>, id: u32, pod: &pipewire::s
 	}
 
 	let mut b = inner.borrow_mut();
-	if let Some(n) = b.nodes.get_mut(&id) {
+	// A node on a hardware route reports mute=false in its Props while the route
+	// is muted: trust the route, and re-read it so changes made here still land.
+	if let Some((dev, _, _)) = b.nodes.get(&id).and_then(|n| b.route_of(n)) {
+		dev.proxy
+			.enum_params(0, Some(pipewire::spa::param::ParamType::Route), 0, u32::MAX);
+	} else if let Some(n) = b.nodes.get_mut(&id) {
 		if let Some(l) = linear_avg {
 			n.volume_cubic = linear_to_cubic(l);
 		}

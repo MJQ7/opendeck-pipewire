@@ -6,6 +6,10 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+### Fixed
+
+- A device with a hardware mute no longer shows as unmuted on the next redraw.
+
 ## [0.4.0]
 
 ### Added
