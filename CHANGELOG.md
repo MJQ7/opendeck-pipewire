@@ -29,6 +29,9 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
   compresses to span 0–150%, green to 100%, orange to 130% and red beyond
   (previously a boosted bar just stayed full; orange on the percentage keys).
   A dial's touchstrip bar compresses the same way, turning orange, then red.
+### Fixed
+
+- A device with a hardware mute no longer shows as unmuted on the next redraw.
 
 ## [0.4.0]
 
