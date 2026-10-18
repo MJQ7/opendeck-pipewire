@@ -6,8 +6,6 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
-## [0.5.0]
-
 ### Added
 
 - **Resizable key labels**: the Device, Input Device and App Volume keys have a
@@ -29,6 +27,7 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
   compresses to span 0–150%, green to 100%, orange to 130% and red beyond
   (previously a boosted bar just stayed full; orange on the percentage keys).
   A dial's touchstrip bar compresses the same way, turning orange, then red.
+
 ### Fixed
 
 - A device with a hardware mute no longer shows as unmuted on the next redraw.
@@ -190,8 +189,7 @@ dedicated Mute action), and **no Node.js or Wine** at runtime.
 - GPL-3.0-or-later license, CI (fmt + clippy + build) and a release workflow that
   bundles the `.sdPlugin` for x86_64 and aarch64 Linux.
 
-[Unreleased]: https://github.com/sjourdois/opendeck-pipewire/compare/v0.5.0...HEAD
-[0.5.0]: https://github.com/sjourdois/opendeck-pipewire/compare/v0.4.0...v0.5.0
+[Unreleased]: https://github.com/sjourdois/opendeck-pipewire/compare/v0.4.0...HEAD
 [0.4.0]: https://github.com/sjourdois/opendeck-pipewire/compare/v0.3.1...v0.4.0
 [0.3.1]: https://github.com/sjourdois/opendeck-pipewire/compare/v0.3.0...v0.3.1
 [0.3.0]: https://github.com/sjourdois/opendeck-pipewire/compare/v0.2.0...v0.3.0
